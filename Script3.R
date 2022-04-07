@@ -118,7 +118,4 @@ plan(multisession, workers = 2)
 library(magrittr)
 system.time(airquality %>% future_map(~(.-mean(.))/sd(.))) ## Bem mais lento!
 
-## FIM ------------------------------------------------------------------------------
-
-
-
+## FIM -------------------------------------------------------------------------

@@ -77,6 +77,3 @@ temp3
 
 system.time(temp <- optim(par = c(log(8), log(0.3) ), fn = my_ll, y = yi, 
                           method = "CG"))
-
-
-

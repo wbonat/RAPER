@@ -77,7 +77,6 @@ cppFunction('int signC(int x) {
   }
 }')
 
-
 ## Função recebe um vetor e retorna um escalar ---------------------------------
 
 ## Soma em R
@@ -99,6 +98,9 @@ cppFunction('double sumC(NumericVector x) {
   return total;
 }')
 
+sumR(seq(1:100))
+sumC(seq(1:100))
+
 ## Comentários
 # Em C++ o index começa em ZERO!
 # Substituição in place -> total += x[i] é equivalente a total = total + x[i].
@@ -113,13 +115,20 @@ bench::mark(
 
 ## Função vetor de entrada e vetor de saída ------------------------------------
 
-# Distãncia Euclidiana entre um escalar e um vetor
+# Distância Euclidiana entre um escalar e um vetor
 
 # R
 pdistR <- function(x, ys) {
   sqrt((x - ys) ^ 2)
 }
 
+pdistR2 <- function(x, ys) {
+  out <- c()
+  for(i in 1:length(ys)) {
+    out[i] = sqrt( (ys[i] -x)^2)
+  }
+  return(out)
+}
 
 # C++
 cppFunction('NumericVector pdistC(double x, NumericVector ys) {
@@ -133,12 +142,14 @@ cppFunction('NumericVector pdistC(double x, NumericVector ys) {
 }')
 
 pdistR(x = c(2), ys = seq(0, 1, l = 5))
+pdistR2(x = c(2), ys = seq(0, 1, l = 5))
 pdistC(x = c(2), ys = seq(0, 1, l = 5))
 
 # Comparando o tempo
 y <- runif(1e6)
 bench::mark(
   pdistR(0.5, y),
+  pdistR2(0.5, y),
   pdistC(0.5, y)
 )[1:6]
 

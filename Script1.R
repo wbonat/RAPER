@@ -193,13 +193,11 @@ my_t <- function(x, grp) {
     m <- mean(x)
     n <- length(x)
     var <- sum((x - m) ^ 2) / (n - 1)
-    
     list(m = m, n = n, var = var)
   }
   
   g1 <- t_stat(x[grp == 1])
   g2 <- t_stat(x[grp == 2])
-  
   se_total <- sqrt(g1$var / g1$n + g2$var / g2$n)
   (g1$m - g2$m) / se_total
 }
@@ -227,3 +225,13 @@ rowtstat <- function(X, grp){
 system.time(t3 <- rowtstat(X, grp))
 
 ## FIM ------------------------------------------------------------------------
+# 1.06/0.017
+
+x <- matrix(1:10, 5, 2)
+
+for(i in 1:5) {
+  print(mean(x[i,]))
+}
+
+rowMeans(x)
+rowMeans
